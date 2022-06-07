@@ -1,6 +1,5 @@
 const { Router } = require(`express`);
 const authController = require(`../controllers/authcontroller`)
-const schema = require(`../model/schema`);
 
 const router = Router()
 

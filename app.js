@@ -3,10 +3,10 @@ const express = require("express");
 const _ = require("lodash");
 const app = express();
 const authRoutes = require(`./routes/authRoutes`);
-const { conn } = require(`./model/mongoose`);
+// const { conn } = require(`./model/mongoose`);
 
 // middlewares
-app.use(authRoutes);
+app.use(`/`,authRoutes);
 app.use(express.json());
 
 

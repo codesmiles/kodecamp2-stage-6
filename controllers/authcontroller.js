@@ -1,4 +1,3 @@
-const schema = require(`../model/schema`)
 
 // general
 module.exports.generalController_get = async(req, res) =>{
@@ -7,11 +6,12 @@ module.exports.generalController_get = async(req, res) =>{
 
 // register
 module.exports.registerController_get = async (req, res) => {
-  res.send(`<h1>Its suppose to work</h1>`);
+  res.send(`<h1>new register</h1>`);
 
 };
 module.exports.registerController_post = async (req, res) => {
-  res.send(`<h1>new register</h1>`);
+  // res.send(`);}
+  console.log(`it suppose work`);
 };
 
 // login
@@ -25,4 +25,4 @@ module.exports.loginController_post = async (req, res) => {
 // RESTRICTED
 module.exports.restrictedController_get = async (req, res) => {
   res.send(`<h1>Its suppose to work</h1>`);
-};
+}
