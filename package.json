@@ -1,0 +1,21 @@
+{
+  "name": "kodecamp2-stage-6",
+  "version": "1.0.0",
+  "description": "Stage 6 promotional task hopefully i will get to survive this shit lol",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Michael codesmiles",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.3.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
