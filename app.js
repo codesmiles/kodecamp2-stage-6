@@ -1,8 +1,8 @@
 // jshint esversion:6
 const express = require("express");
 const authRoutes = require(`./routes/authRoutes`);
-// const { conn } = require(`./model/mongoose`);
 const app = express();
+
 // middlewares
 app.use(`/`,authRoutes);// ISSUE IN UNDERSTANDING
 app.use(express.json());
