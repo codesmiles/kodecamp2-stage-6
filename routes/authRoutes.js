@@ -9,6 +9,4 @@ router.get(`/restricted`, authController.restrictedController_get);
 router.post(`/register`, authController.registerController_post);
 router.post(`/login`, authController.loginController_post);
 
-
-
 module.exports = router;

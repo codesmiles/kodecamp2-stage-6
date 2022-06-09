@@ -1,12 +1,11 @@
 const Model = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-// const mongoose = require("mongoose");
 
-//------------------TESTING VALIDATOR-------------------
-// console.log(validator.isEmail(`mikedbci@fmail.com`));
-// console.log(validator.isStrongPassword(`mikeAdbch@1`));
-//------------------------------------------------------
+
+
+
+// TO RETURN ERROR
 const handleErr = (err) => {
   if (err) {
     console.log(err);

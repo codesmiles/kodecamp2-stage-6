@@ -2,11 +2,12 @@
 const express = require("express");
 const authRoutes = require(`./routes/authRoutes`);
 const app = express();
-const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser");
 
 // middlewares
 app.use(express.json());
-app.use(`/`, authRoutes);// ISSUE IN UNDERSTANDING
+app.use(`/`, authRoutes);
+app.use(cookieParser());// USE COOKIE PARSER
 
 //IMPORT MONGOOSE-----------------------------------------------------------------
 const mongoose = require("mongoose"); //import mongoose
