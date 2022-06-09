@@ -1,7 +1,7 @@
 const Model = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
 //------------------TESTING VALIDATOR-------------------
 // console.log(validator.isEmail(`mikedbci@fmail.com`));
@@ -72,8 +72,8 @@ module.exports.registerController_post = async (req, res) => {
 //LOGIN
 module.exports.loginController_get = async (req, res) => {
   res.json({
-    message: `successful`,
-    status: 200,
+    successful: true,
+    status:200
   })
 };
 module.exports.loginController_post = async (req, res) => {
@@ -84,8 +84,9 @@ module.exports.loginController_post = async (req, res) => {
     if (data) {
       res.json({
         successful: true,
-        data,
-      }).status(200)
+        status:200,
+        data
+      })
     }
   })
 };

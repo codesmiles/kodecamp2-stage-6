@@ -4,12 +4,12 @@ const { Schema } = mongoose;
 const mongooseSchema = new Schema({
   email: {
     type: String,
-    // required: true,
+    required: true
   },
   password: {
     type: String,
-    // required: true,
-  },
+    required: true
+  }
 });
 
 const MongooseModel = mongoose.model("user", mongooseSchema);
