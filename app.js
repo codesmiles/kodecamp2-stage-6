@@ -10,19 +10,13 @@ app.use(express.json());
 //IMPORT MONGOOSE-----------------------------------------------------------------
 const mongoose = require("mongoose"); //import mongoose
 const url = `mongodb://localhost:27017/userAuth`;
+// connect to mongoose
 
-mongoose.connect(url, { useNewUrlParser: true });
-
-const conn = mongoose.connection;
-
-conn.on("error", console.error.bind(console, "connection error:"));
-
-conn.on("connected", () => {
-  console.log("connected to mongoDB");
+mongoose.connect(url, function (err) { 
+  if (err) { console.log(err); }
+  console.log(`Connected to MongoDB`);
 });
-conn.on("disconnected", () => {
-  console.log("disconnected from mongoDB");
-});
+
 // -----------------------------------------------------------------
 
 const port = process.env.PORT || 1000;

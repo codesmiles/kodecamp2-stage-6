@@ -1,8 +1,7 @@
-const schema = require("../model/schema");
+const { mongooseModel } = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const { Schema } = require("mongoose");
-const _ = require("lodash");
+// const mongoose  = require("mongoose");
 
 //------------------TESTING VALIDATOR-------------------
 console.log(validator.isEmail(`mikedbci@fmail.com`));
@@ -11,30 +10,37 @@ console.log(validator.isStrongPassword(`mikeAdbch@1`));
 
 // GENERAL
 module.exports.generalController_get = async (req, res) => {
-  res.send(`<h1>Its suppose to work</h1>`);
+  res.json({
+    message: "It's suppose to work",
+    status:200
+  })
+
 };
 
 // REGISTER
 module.exports.registerController_get = async (req, res) => {
-  res.send(`<h1>new register</h1>`);
+  res.json({
+    message: `successful`,
+    status: 200,
+
+  });
 };
 module.exports.registerController_post = async (req, res) => {
-  console.log(`it suppose work`);
 
   //------------------TESTING BCRYPT----------------------
 
   // creating new mongoose doc
-  const user = new Schema({
-    email: "mik@g.com",
-    password: "nkdjvnsovljns",
-  });
+  // const user = new Schema({
+  //   email: "mik@g.com",
+  //   password: "nkdjvnsovljns",
+  // });
 
-  // generate salt to hashpassword
-  const salt = await bcrypt.genSalt(10);
+  // // generate salt to hashpassword
+  // const salt = await bcrypt.genSalt(10);
 
-  // set password to a hashed password
-  user.password = await bcrypt.hash(user.password, salt);
-  user.save().then((doc) => res.status(201).send(doc));
+  // // set password to a hashed password
+  // user.password = await bcrypt.hash(user.password, salt);
+  // user.save().then((doc) => res.status(201).send(doc));
 
   //------------------------------------------------------
 };
