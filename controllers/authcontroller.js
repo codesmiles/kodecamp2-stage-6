@@ -7,6 +7,12 @@ const bcrypt = require("bcrypt");
 console.log(validator.isEmail(`mikedbci@fmail.com`));
 console.log(validator.isStrongPassword(`mikeAdbch@1`));
 //------------------------------------------------------
+const handleErr = (err)=>{
+  if (err) {
+    console.log(err)
+  }
+}
+
 
 // GENERAL
 module.exports.generalController_get = async (req, res) => {
@@ -26,6 +32,21 @@ module.exports.registerController_get = async (req, res) => {
   });
 };
 module.exports.registerController_post = async (req, res) => {
+
+  const { email, password } = req.body;
+
+  const insertRecord = new mongooseModel({
+    email,
+    password,
+  });
+  insertRecord.save((err, data) => { 
+    handleErr(err);
+    res.json({
+      successful: true,
+      data
+      
+    })
+  });
 
   //------------------TESTING BCRYPT----------------------
 
