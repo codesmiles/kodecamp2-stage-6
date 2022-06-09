@@ -8,7 +8,6 @@ const cookieParser = require("cookie-parser");
 app.use(express.json());
 app.use(`/`, authRoutes);
 app.use(cookieParser());// USE COOKIE PARSER
-
 //IMPORT MONGOOSE-----------------------------------------------------------------
 const mongoose = require("mongoose"); //import mongoose
 const url = `mongodb://localhost:27017/userAuth`;

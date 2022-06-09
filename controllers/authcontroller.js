@@ -1,10 +1,6 @@
 const Model = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
-const { findOne } = require("../model/schema");
-
-
-
 
 // TO RETURN ERROR
 const handleErr = (err) => {
@@ -42,12 +38,13 @@ module.exports.registerController_post = async (req, res) => {
     //     })
     //   }
     // })
-    
+
     //------------------USING BCRYPT----------------------
     // generate salt to hashpassword
     const salt = await bcrypt.genSalt(10);
     // set password to a hashed password
     password = await bcrypt.hash(password, salt);
+
     //----------------------------------------------------
 
     const insertRecord = new Model({
@@ -63,16 +60,16 @@ module.exports.registerController_post = async (req, res) => {
       });
     });
   } else {
-    if(!validator.isEmail(email)){
+    if (!validator.isEmail(email)) {
       res.json({
         successful: false,
-        message: `Email is not valid`
+        message: `Email is not valid`,
       });
     }
-    if(!validator.isStrongPassword(password)){
+    if (!validator.isStrongPassword(password)) {
       res.json({
         successful: false,
-        message: `Password requires at least 8 characters, one number and one special character`
+        message: `Password requires at least 8 characters, one number and one special character`,
       });
     }
   }
@@ -82,22 +79,28 @@ module.exports.registerController_post = async (req, res) => {
 module.exports.loginController_get = async (req, res) => {
   res.json({
     successful: true,
-    status:200
-  })
+    status: 200,
+  });
 };
 module.exports.loginController_post = async (req, res) => {
   let { email, password } = req.body;
 
-  Model.findOne({ email }, (err, data) => {
+  const user = Model.findOne({ email }, (err, data) => {
     handleErr(err);
     if (data) {
-      res.json({
-        successful: true,
-        status:200,
-        data
-      })
+      const passwordsMatch = bcrypt.compareSync(password, data.password);
+      if (!passwordsMatch) {
+        res.send(`passwords is incorrect`);
+      } else {
+        res.json({
+          message:"user Confirmed",
+          successful: true,
+          status: 200,
+          data,
+        });
+      }
     }
-  })
+  });
 };
 
 // RESTRICTED
