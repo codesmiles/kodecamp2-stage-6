@@ -1,6 +1,7 @@
 const Model = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const { findOne } = require("../model/schema");
 
 
 
@@ -32,6 +33,15 @@ module.exports.registerController_post = async (req, res) => {
   let { email, password } = req.body;
 
   if (validator.isEmail(email) && validator.isStrongPassword(password)) {
+    // To check if it already exist in the database
+    // findOne(email,function(err, data){
+    //   handleErr(err);
+    //   if(!err){
+    //     res.json({
+    //       data
+    //     })
+    //   }
+    // })
     
     //------------------USING BCRYPT----------------------
     // generate salt to hashpassword
