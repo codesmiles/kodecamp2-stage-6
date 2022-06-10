@@ -31,10 +31,10 @@ module.exports.registerController_post = async (req, res) => {
 
   if (validator.isEmail(email) && validator.isStrongPassword(password)) {
     //   // To check if it already exist in the database
-    const exist = await Model.findOne({ email });
-    if (exist) {
+    const emailExist = await Model.findOne({ email });
+    if (emailExist) {
       res.json({
-        message: `Email already esist`,
+        message: `Email already exist`,
         statusCode: 400,
       });
     } else {
@@ -82,24 +82,35 @@ module.exports.loginController_get = async (req, res) => {
 };
 module.exports.loginController_post = async (req, res) => {
   let { email, password } = req.body;
-
-  const user = Model.findOne({ email }, "email password");
-
+  const user = await Model.findOne({ email }, "email password");
+ 
   const passwordsMatch = bcrypt.compareSync(password, user.password);
-  res.send(passwordsMatch);
+
+ 
+  const emailMatch = await Model.findOne({email})
+ if (!emailMatch){
+   res.send("email is not registered")
+ }else{
   if (!passwordsMatch) {
     res.send(`passwords is incorrect`);
   } else {
     jwt.sign(
       { email: user.email, role: user.role },
       process.env.jwtKey,
-      (err, token) => {}
+      (err, token) => {
+        res.send(token);
+      }
     );
-    res.send(token);
+    
   }
+ }
 };
 
 // RESTRICTED
 module.exports.restrictedController_get = async (req, res) => {
-  res.send(`Restricted for logged in users`);
+  res.json({
+    successful:true,
+    message:`successfuly accessed the Restricted route for logged in users`,
+    statusCode:200
+  });
 };
