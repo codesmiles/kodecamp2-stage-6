@@ -10,7 +10,10 @@ const mongooseSchema = new Schema({
     type: String,
     required: true
   },
-  role: String
+  // role: {
+  //   type:String,
+  //   required:true
+  // }
 });
 
 const MongooseModel = mongoose.model("user", mongooseSchema);

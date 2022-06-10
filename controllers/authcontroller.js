@@ -22,45 +22,45 @@ module.exports.generalController_get = async (req, res) => {
 module.exports.registerController_get = async (req, res) => {
   res.json({
     message: `successful`,
-    status: 200,
+    statusCode: 200,
   });
 };
 module.exports.registerController_post = async (req, res) => {
-  // console.log(req.body)
-  let { email, password } = req.body;
+  let { email, password } = req.body; // accepts the body reuests
 
   if (validator.isEmail(email) && validator.isStrongPassword(password)) {
-    // To check if it already exist in the database
-    // findOne(email,function(err, data){
-    //   handleErr(err);
-    //   if(!err){
-    //     res.json({
-    //       data
-    //     })
-    //   }
-    // })
-
-    //------------------USING BCRYPT----------------------
-    // generate salt to hashpassword
-    const salt = await bcrypt.genSalt(10);
-    // set password to a hashed password
-    password = await bcrypt.hash(password, salt);
-
-    //----------------------------------------------------
-
-    const insertRecord = new Model({
-      email,
-      password,
-      role
-    });
-
-    insertRecord.save((err, data) => {
-      handleErr(err);
+    //   // To check if it already exist in the database
+    const exist = await Model.findOne({ email });
+    if (exist) {
       res.json({
-        successful: true,
-        data,
+        message: `Email already esist`,
+        statusCode: 400,
       });
-    });
+    } else {
+
+      //------------------USING BCRYPT----------------------
+      // generate salt to hashpassword
+      const salt = await bcrypt.genSalt(10);
+      // set password to a hashed password
+      password = await bcrypt.hash(password, salt);
+
+      //----------------------------------------------------
+
+      const insertRecord = new Model({
+        email,
+        password,
+        // role
+      });
+
+      insertRecord.save((err, data) => {
+        handleErr(err);
+        res.json({
+          successful: true,
+          data,
+        });
+      });
+    }
+
   } else {
     if (!validator.isEmail(email)) {
       res.json({
@@ -87,25 +87,20 @@ module.exports.loginController_get = async (req, res) => {
 module.exports.loginController_post = async (req, res) => {
   let { email, password } = req.body;
 
-  const user = Model.findOne({ email }, (err, data) => {
-    handleErr(err);
-    if (data) {
-      const passwordsMatch = bcrypt.compareSync(password, data.password);
-      if (!passwordsMatch) {
-        res.send(`passwords is incorrect`);
-      } else {
-        jwt.sign({
-          email:data.email,
-        });
-        res.json({
-          message:"user Confirmed",
-          successful: true,
-          status: 200,
-          data,
-        });
-      }
-    }
-  });
+  const user = Model.findOne({ email }, "email password");
+
+  const passwordsMatch = bcrypt.compareSync(password, user.password);
+  res.send(passwordsMatch);
+  if (!passwordsMatch) {
+    res.send(`passwords is incorrect`);
+  } else {
+    jwt.sign(
+      { email: user.email, role: user.role },
+      process.env.jwtKey,
+      (err, token) => {}
+    );
+    res.send(token);
+  }
 };
 
 // RESTRICTED
