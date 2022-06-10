@@ -9,7 +9,8 @@ const mongooseSchema = new Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  role: String
 });
 
 const MongooseModel = mongoose.model("user", mongooseSchema);

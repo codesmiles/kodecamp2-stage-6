@@ -1,6 +1,7 @@
 const Model = require("../model/schema");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 // TO RETURN ERROR
 const handleErr = (err) => {
@@ -12,7 +13,7 @@ const handleErr = (err) => {
 // GENERAL
 module.exports.generalController_get = async (req, res) => {
   res.json({
-    message: "It's suppose to work",
+    message: "Anyone can access",
     status: 200,
   });
 };
@@ -50,6 +51,7 @@ module.exports.registerController_post = async (req, res) => {
     const insertRecord = new Model({
       email,
       password,
+      role
     });
 
     insertRecord.save((err, data) => {
@@ -92,6 +94,9 @@ module.exports.loginController_post = async (req, res) => {
       if (!passwordsMatch) {
         res.send(`passwords is incorrect`);
       } else {
+        jwt.sign({
+          email:data.email,
+        });
         res.json({
           message:"user Confirmed",
           successful: true,
@@ -105,5 +110,5 @@ module.exports.loginController_post = async (req, res) => {
 
 // RESTRICTED
 module.exports.restrictedController_get = async (req, res) => {
-  res.send(`<h1>Its suppose to work</h1>`);
+  res.send(`Restricted for logged in users`);
 };
