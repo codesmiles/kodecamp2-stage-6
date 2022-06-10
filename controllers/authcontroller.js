@@ -25,8 +25,9 @@ module.exports.registerController_get = async (req, res) => {
     statusCode: 200,
   });
 };
+
 module.exports.registerController_post = async (req, res) => {
-  let { email, password } = req.body; // accepts the body reuests
+  let { email, password,role } = req.body; // accepts the body reuests
 
   if (validator.isEmail(email) && validator.isStrongPassword(password)) {
     //   // To check if it already exist in the database
@@ -37,7 +38,6 @@ module.exports.registerController_post = async (req, res) => {
         statusCode: 400,
       });
     } else {
-
       //------------------USING BCRYPT----------------------
       // generate salt to hashpassword
       const salt = await bcrypt.genSalt(10);
@@ -46,11 +46,7 @@ module.exports.registerController_post = async (req, res) => {
 
       //----------------------------------------------------
 
-      const insertRecord = new Model({
-        email,
-        password,
-        // role
-      });
+      const insertRecord = new Model({email,password,role});
 
       insertRecord.save((err, data) => {
         handleErr(err);
